@@ -84,37 +84,3 @@ kubectl delete -f service-prometheus.yml
 kubectl logs podname
 
 echo test | nc 127.0.0.1 4444
-
-###test commands:####
-https://kublr.com/blog/setting-up-mysql-replication-clusters-in-kubernetes-2/
-
-
-mysql -h mariadb-master -u root -pmasterqwerty test -e "INSERT INTO test.new_table (\`name\`, \`address\`) VALUES (\`ccc\`, \`bbb\`)"
-
--e "INSERT INTO test.new_table (name, address) VALUES (ccc, bbb)"
-
-mysql -h mariadb-master -u root -pmasterqwerty -D test -e "INSERT INTO `new_table` (\`name\`, \`address\`) VALUES (\`ccc\`, \`bbb\`);" > output.txt 
-
-mysql -h mariadb-master -u root -pmasterqwerty -D test -e "INSERT INTO new_table (name, address) VALUES (ccc, bbb);" > output.txt 
-
-echo "INSERT INTO `new_table`(name, address) VALUES (\`aaa\`, \`bbb\`);" | mysql -h mariadb-master -u root -pmasterqwerty -D test
-echo "UPDATE `database` SET `field1` = '1' WHERE `id` = 1111;" | mysql database --user='root' --password='my-password'
-
-
-mysql -h mariadb-master -u root -pmasterqwerty -D test -e  "USE test; SELECT * FROM test.new_table;" | tee queryresults.txt
-
-mysql -h mariadb-master -u root -pmasterqwerty -D test -e  "USE test; INSERT INTO test.new_table (name, address) VALUES ('aaa11', 'bbb'); "
-
-
-INSERT INTO test.new_table (name, address) VALUES ("ggg", "ddd"); 
-
-
-#bin/bash
-
-docker run -dti -p 3806:3306 --name mariadb-master -e MARIADB_ROOT_PASSWORD=masterqwerty -e MARIADB_REPLICATION_MODE=master -e MARIADB_REPLICATION_USER=replicauser -e MARIADB_REPLICATION_PASSWORD=qwerty12 -e MARIADB_USER=replicauser -e MARIADB_PASSWORD=qwerty -e MARIADB_DATABASE=test  bitnami/mariadb:latest
-
-docker run -dti -p 3807:3306 --name mariadb-slave --link mariadb-master:master -e MARIADB_REPLICATION_MODE=slave -e MARIADB_REPLICATION_USER=replicauser -e MARIADB_REPLICATION_PASSWORD=qwerty12 -e MARIADB_MASTER_HOST=master -e MARIADB_MASTER_ROOT_PASSWORD=masterqwerty bitnami/mariadb:latest
-
-docker run -dti -p 3808:3306 --name mariadb-slave2 --link mariadb-master:master -e MARIADB_REPLICATION_MODE=slave -e MARIADB_REPLICATION_USER=replicauser -e MARIADB_REPLICATION_PASSWORD=qwerty12 -e MARIADB_MASTER_HOST=master -e MARIADB_MASTER_ROOT_PASSWORD=masterqwerty bitnami/mariadb:latest
-
-docker run -dti -p 3809:3306 --name mariadb-slave3 --link mariadb-master:master -e MARIADB_REPLICATION_MODE=slave -e MARIADB_REPLICATION_USER=replicauser -e MARIADB_REPLICATION_PASSWORD=qwerty12 -e MARIADB_MASTER_HOST=master -e MARIADB_MASTER_ROOT_PASSWORD=masterqwerty bitnami/mariadb:latest
