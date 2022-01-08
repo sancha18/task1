@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-slave
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb-slave
+  template: 
+    metadata:
+      labels:
+        app: mariadb-slave
+    spec:
+      containers:
+        - name: mariadb-slave
+          image: bitnami/mariadb:latest
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 300Mi
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_REPLICATION_MODE
+              value: 'slave'
+            - name: MARIADB_REPLICATION_USER
+              value: 'repl_user'
+            - name: MARIADB_REPLICATION_PASSWORD
+              value: 'repl_password'
+            - name: MARIADB_MASTER_HOST
+              value: 'mariadb-master'
+            - name: MARIADB_MASTER_PORT_NUMBER
+              value: '3306'
+            - name: MARIADB_MASTER_ROOT_PASSWORD
+              value: 'masterqwerty'

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reader-server
+  labels:
+    run: reader-server
+spec:
+  ports:
+    - protocol: "TCP" 
+      port: 4444
+      targetPort: 4444
+  type: ClusterIP
+  selector:
+    app: reader-server

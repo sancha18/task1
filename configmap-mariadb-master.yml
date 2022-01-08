@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sqlinit
+data:
+  initdb.sql: |
+    USE `test`;
+    DROP TABLE IF EXISTS `new_table`;
+    CREATE TABLE `new_table` (`name` varchar(10) DEFAULT NULL,`address` varchar(10) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;

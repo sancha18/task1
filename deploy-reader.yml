@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reader-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reader-server
+  template: 
+    metadata:
+      labels:
+        app: reader-server
+    spec:
+      containers:
+        - name: reader-server
+          image: readerdockerise
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 300Mi
+          ports:
+            - containerPort: 4444

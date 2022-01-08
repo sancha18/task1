@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb-master
+  template: 
+    metadata:
+      labels:
+        app: mariadb-master
+    spec:
+      containers:
+        - name: mariadb-master
+          image: bitnami/mariadb:latest
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 300Mi
+          volumeMounts:
+            - name: mariadb-initdb
+              mountPath: /docker-entrypoint-initdb.d/initdb.sql
+              subPath: initdb.sql1
+              readOnly: true
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: 'masterqwerty'
+            - name: MARIADB_REPLICATION_MODE
+              value: 'master'
+            - name: MARIADB_REPLICATION_USER
+              value: 'repl_user'
+            - name: MARIADB_REPLICATION_PASSWORD
+              value: 'repl_password'
+            - name: MARIADB_USER
+              value: 'replicauser'
+            - name: MARIADB_PASSWORD
+              value: 'qwerty'
+            - name: MARIADB_DATABASE
+              value: 'test'
+            - name: initdbScripts
+              value: 'test'
+      volumes:
+        - name: mariadb-initdb
+          configMap:
+            name: sqlinit
+            items:
+              - key: "initdb.sql" 
+                path: "initdb.sql1" 

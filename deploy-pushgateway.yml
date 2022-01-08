@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pushgateway-server
+  labels:
+    app: pushgateway-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pushgateway-server
+  template:
+    metadata:
+      labels:
+        app: pushgateway-server
+    spec:
+      containers:
+        - name: pushgateway-server
+          image: prom/pushgateway
+          ports:
+            - containerPort: 9091
