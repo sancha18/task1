@@ -16,8 +16,8 @@ docker build -t writerdockerise .
 cd reader
 docker build -t readerdockerise .
 
-6 in new terminal
-6.1 start configmap
+6. in new terminal
+6.1. start configmap
 kubectl create -f configmap-mariadb-master.yml
 kubectl create -f configmap-prometheus.yml
 
@@ -45,7 +45,7 @@ kubectl create -f deploy-pushgateway.yml
 kubectl create -f deploy-mariadb-master.yml && kubectl create -f deploy-mariadb-slave.yml && kubectl create -f deploy-writer.yml && kubectl create -f deploy-reader.yml && kubectl create -f deploy-prometheus.yml && kubectl create -f deploy-grafana.yml && kubectl create -f deploy-pushgateway.yml
 
 
-6. enable forward server each in separate terminal tab:
+7. enable forward server each in separate terminal tab:
 
 kubectl port-forward service/mariadb-master 3306:3306
 kubectl port-forward service/mariadb-slave 3307:3306
@@ -53,7 +53,7 @@ kubectl port-forward service/reader-server 4444:4444
 kubectl port-forward service/prometheus-server 9090:9090
 kubectl port-forward service/grafana-server 3000:3000
 
-7. Configure grafana:
+8. Configure grafana (manual step):
 connect prometheus
 create two dashboards writer and reader
 
