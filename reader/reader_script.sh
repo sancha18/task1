@@ -7,6 +7,7 @@
 
 while true ;
 do
+
 z=$(mysql -h mariadb-master -u root -pmasterqwerty -D test -vvv -e  "SELECT count(*) FROM test.new_table;" | grep "sec" | awk '{ print $5 }' | cut -f2 -d"(")
 while read -r z
 do
