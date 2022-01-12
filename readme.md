@@ -49,7 +49,7 @@ start services
 
     kubectl create -f service-mariadb.yml && kubectl create -f service-mariadb-slave.yml && kubectl create -f service-reader.yml && kubectl create -f service-prometheus.yml && kubectl create -f service-grafana.yml && kubectl create -f service-grafana.yml && kubectl create -f service-pushgateway.yml
 
-6.2 start deployments
+start deployments
 
     kubectl create -f deploy-mariadb-master.yml
     kubectl create -f deploy-mariadb-slave.yml
@@ -70,7 +70,7 @@ Open ports to outside enable forward server each in separate terminal tab:
     kubectl port-forward service/prometheus-server 9090:9090
     kubectl port-forward service/grafana-server 3000:3000
 
-* Configure grafana (manual step):
+Configure grafana (manual step):
 
 connect prometheus
 in browser: 
